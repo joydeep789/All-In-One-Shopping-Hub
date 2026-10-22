@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - All In One Shopping Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-image: url('image.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #080b11;
+            color: #ffffff; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            overflow-x: hidden; 
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(8, 11, 17, 0.88);
+            z-index: -1;
+        }
+
+        .top-navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(18, 24, 36, 0.75);
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+
+        .back-home-btn {
+            background: rgba(255, 153, 0, 0.12);
+            border: 1px solid rgba(255, 153, 0, 0.4);
+            color: #ff9900;
+            text-decoration: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-home-btn:hover { background: #ff9900; color: #000; }
+
+        .nav-brand {
+            font-family: 'Dancing Script', cursive;
+            color: #ff9900;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-menu { display: flex; align-items: center; gap: 10px; }
+        .nav-link { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 500; padding: 6px 12px; border-radius: 12px; transition: 0.2s; }
+        .nav-link:hover { color: #ff9900; }
+
+        .user-profile-area { position: relative; }
+        .nav-profile-pic { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ff9900; cursor: pointer; object-fit: cover; }
+
+        .profile-dropdown {
+            display: none; position: absolute; right: 0; top: 48px; background: #111622; border: 1px solid rgba(255, 153, 0, 0.4);
+            border-radius: 14px; width: 240px; padding: 15px; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
+
+        .profile-dropdown h4 { color: #ff9900; font-size: 0.9rem; margin-bottom: 4px; }
+        .profile-dropdown p { color: #94a3b8; font-size: 0.75rem; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .history-list { color: #e2e8f0; font-size: 0.78rem; padding-left: 15px; margin-bottom: 12px; max-height: 100px; overflow-y: auto; }
+        .logout-btn { background: #ef4444; color: white; font-weight: 700; border: none; padding: 8px; width: 100%; border-radius: 6px; cursor: pointer; }
+
+        .search-header { text-align: center; margin-bottom: 18px; }
+        .search-header h2 { color: #ff9900; font-size: 2.8rem; font-weight: 800; font-family: 'Dancing Script', cursive; text-shadow: 0 4px 15px rgba(255, 153, 0, 0.2); }
+        .search-header p { color: #cbd5e1; font-size: 0.88rem; }
+
+        .did-you-mean-box {
+            color: #38bdf8;
+            font-size: 0.95rem;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+        .did-you-mean-box a {
+            color: #f59e0b;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        /* Search Controls Bar */
+        .search-controls-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .search-container { 
+            display: flex; 
+            align-items: center; 
+            background: rgba(18, 24, 36, 0.85); 
+            border: 1.5px solid rgba(255, 153, 0, 0.5); 
+            border-radius: 35px; 
+            padding: 5px 8px 5px 18px; 
+            flex: 1;
+            min-width: 300px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); 
+        }
+
+        .search-container input[type="text"] { 
+            flex: 1; 
+            background: transparent; 
+            border: none; 
+            color: #ffffff; 
+            font-size: 0.92rem; 
+            outline: none; 
+        }
+
+        .camera-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .sort-select-box {
+            background: rgba(18, 24, 36, 0.85);
+            border: 1.5px solid rgba(255, 153, 0, 0.5);
+            color: #ff9900;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 10px 16px;
+            border-radius: 25px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .sort-select-box option {
+            background: #111622;
+            color: #ffffff;
+        }
+
+        .search-btn { 
+            background: linear-gradient(45deg, #ff9900, #ff5e62); 
+            border: none; 
+            color: #fff; 
+            font-weight: 700; 
+            padding: 10px 22px; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            white-space: nowrap;
+        }
+        .search-btn:hover { transform: scale(1.03); }
+
+        /* Modal Controls */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(4, 7, 12, 0.82); backdrop-filter: blur(10px); z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background-color: #1a1e29; border: 2px solid #ff9900; border-radius: 12px;
+            padding: 20px; width: 280px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .modal-btn { background-color: #2a2f3d; color: #fff; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; text-align: center; font-size: 0.9rem; }
+        .close-btn { background-color: #d9534f; color: white; border: none; padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+
+        /* Top Best Deal Card */
+        .best-deal-box { 
+            background: linear-gradient(135deg, rgba(22, 30, 46, 0.95), rgba(15, 21, 33, 0.98)); 
+            border: 2px solid #ff9900; 
+            padding: 22px; 
+            border-radius: 24px; 
+            margin-bottom: 35px; 
+            text-align: center; 
+            width: 100%; 
+            max-width: 500px; 
+            display: none; 
+            box-shadow: 0 12px 35px rgba(255, 153, 0, 0.25);
+        }
+
+        .best-deal-badge { 
+            background: linear-gradient(45deg, #ff4d4d, #ff9900); 
+            color: #fff; 
+            font-weight: 800; 
+            padding: 5px 16px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            display: inline-block; 
+            margin-bottom: 12px; 
+        }
+
+        .best-deal-img-wrapper {
+            background: #ffffff; border-radius: 16px; width: 150px; height: 150px; margin: 0 auto 12px;
+            display: flex; align-items: center; justify-content: center; padding: 8px; overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+        }
+        #bestDealImg { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 1150px; padding-bottom: 50px; }
+        .product-card { 
+            background: rgba(18, 24, 36, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 18px; 
+            padding: 18px; display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: 0.3s;
+            backdrop-filter: blur(8px);
+        }
+        .product-card:hover { transform: translateY(-4px); border-color: rgba(255, 153, 0, 0.5); box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+        .platform-badge { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.85); border: 1px solid rgba(255, 153, 0, 0.5); color: #ff9900; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 15px; z-index: 2; }
+        .product-img-wrapper { background: #ffffff; border-radius: 12px; padding: 10px; margin-bottom: 12px; height: 160px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .rating-price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .rating-badge { background: rgba(255, 204, 0, 0.12); color: #ffcc00; font-size: 0.78rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+        .product-price { color: #4ade80; font-size: 1.35rem; font-weight: 800; }
+        .product-name { color: #e2e8f0; font-size: 0.92rem; font-weight: 500; margin-bottom: 12px; height: 40px; overflow: hidden; line-height: 1.3; }
+        .buy-now-btn { background: rgba(255, 153, 0, 0.1); border: 1px solid rgba(255, 153, 0, 0.3); color: #ff9900; text-decoration: none; font-weight: 700; padding: 10px 0; border-radius: 10px; display: block; width: 100%; text-align: center; transition: 0.3s; }
+        .buy-now-btn:hover { background: linear-gradient(45deg, #ff9900, #ff5e62); color: #fff; border-color: transparent; }
+        .loader { border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #ff9900; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 30px auto; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .top-navbar { flex-direction: column; gap: 10px; text-align: center; }
+            .search-controls-wrapper { flex-direction: column; }
+            .search-container { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-navbar">
+        <div class="nav-left">
+            <a href="front_page.html" class="back-home-btn">← Home</a>
+            <a href="front_page.html" class="nav-brand">AIO Shopping Hub</a>
+        </div>
+        <div class="nav-menu">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="help.html" class="nav-link">Help</a>
+            <a href="creator.html" class="nav-link">Creator</a>
+            <a href="front_page.html?openAuth=true" class="nav-link" id="navAuthBtn" style="background: #ff9900; color: #000; font-weight: 700; padding: 6px 14px; border-radius: 15px;">Login</a>
+
+            <div class="user-profile-area" id="userProfileArea" style="display: none;">
+                <img id="navProfilePic" class="nav-profile-pic" src="" alt="Profile">
+                <div id="profileDropdown" class="profile-dropdown">
+                    <h4 id="dropdownUserName">Hi, User</h4>
+                    <p id="dropdownUserDetails">Phone: - <br> Age: -</p>
+                    <h4 style="color: #ff9900; margin-bottom: 6px; font-size: 0.8rem;">Search History</h4>
+                    <ul id="historyList" class="history-list"><li>No history yet</li></ul>
+                    <button id="logoutBtn" class="logout-btn">Logout & Delete Data</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-header">
+        <h2>Explore Deals</h2>
+        <p id="searchQueryText">Discover and compare products across all platforms</p>
+        <div id="didYouMeanArea" class="did-you-mean-box"></div>
+    </div>
+
+    <div class="search-controls-wrapper">
+        <div class="search-container">
+            <input type="text" placeholder="Search for fashion, electronics, makeup..." id="searchInput">
+            <button class="camera-btn" id="cameraModalTrigger" title="Search by Image">📷</button>
+            <button class="search-btn" id="searchBtn">Search</button>
+        </div>
+
+        <!-- Sort By Dropdown -->
+        <select id="sortSelect" class="sort-select-box">
+            <option value="default">Sort By: Featured</option>
+            <option value="lowToHigh">Price: Low to High</option>
+            <option value="highToLow">Price: High to Low</option>
+            <option value="ratingHigh">Rating: High to Low</option>
+        </select>
+    </div>
+
+    <!-- Image Search Option Modal -->
+    <div id="optionModal" class="modal">
+        <div class="modal-content">
+            <p style="margin-bottom: 15px; font-weight: bold; color: #fff;">Choose Image Source:</p>
+            <label for="galleryInput" class="modal-btn">Gallery / File</label>
+            <input type="file" id="galleryInput" accept="image/*" style="display: none;">
+            
+            <label for="cameraInput" class="modal-btn">Take Photo</label>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+            
+            <button class="close-btn" id="closeModalBtn">Cancel</button>
+        </div>
+    </div>
+
+    <div class="loader" id="loadingSpinner"></div>
+
+    <!-- Top Best Selected Product Box -->
+    <div id="bestSuggestionBox" class="best-deal-box">
+        <span class="best-deal-badge">👑 #1 BEST OVERALL DEAL</span>
+        <div class="best-deal-img-wrapper">
+            <img id="bestDealImg" src="" alt="Best Deal">
+        </div>
+        <div id="bestTitle" style="color: #fff; font-size: 1.15rem; font-weight: 700; margin-bottom: 4px;"></div>
+        <div id="bestInfo" style="color: #4ade80; font-size: 1.05rem; font-weight: 700; margin-bottom: 15px;"></div>
+        <a id="bestLink" href="#" target="_blank" class="buy-now-btn" style="background: linear-gradient(45deg, #ff9900, #ff5e62); color: white; border: none;">Buy From Best Store</a>
+    </div>
+
+    <div id="searchResultsGrid" class="results-grid"></div>
+
+    <script>
+        const BACKEND_URL = 'http://localhost:5000/api';
+        let rawFetchedProducts = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+            const category = urlParams.get('category');
+            const type = urlParams.get('type');
+
+            const searchQueryText = document.getElementById('searchQueryText');
+            const didYouMeanArea = document.getElementById('didYouMeanArea');
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const searchBtn = document.getElementById('searchBtn');
+            const loader = document.getElementById('loadingSpinner');
+
+            checkLoginState();
+
+            if (query) searchInput.value = query;
+
+            function performNewSearch(termToSearch) {
+                const newQuery = termToSearch || searchInput.value.trim();
+                if(newQuery) window.location.href = `results.html?query=${encodeURIComponent(newQuery)}&category=${category || 'all'}`;
+            }
+
+            searchBtn.addEventListener('click', () => performNewSearch());
+            searchInput.addEventListener('keydown', (e) => { 
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performNewSearch(); 
+                }
+            });
+
+            // Sorting Trigger
+            sortSelect.addEventListener('change', filterAndRenderUI);
+
+            // Camera Modal Logic
+            const optionModal = document.getElementById('optionModal');
+            const cameraModalTrigger = document.getElementById('cameraModalTrigger');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const galleryInput = document.getElementById('galleryInput');
+            const cameraInput = document.getElementById('cameraInput');
+
+            if (cameraModalTrigger) cameraModalTrigger.addEventListener('click', () => optionModal.classList.add('show'));
+            if (closeModalBtn) closeModalBtn.addEventListener('click', () => optionModal.classList.remove('show'));
+
+            async function handleFileUpload(file) {
+                if (!file) return;
+                const formData = new FormData();
+                formData.append('image', file);
+
+                try {
+                    loader.style.display = 'block';
+                    const response = await fetch(`${BACKEND_URL}/search/image`, { method: 'POST', body: formData });
+                    const data = await response.json();
+                    loader.style.display = 'none';
+                    optionModal.classList.remove('show');
+
+                    if (data.success && data.products.length > 0) {
+                        rawFetchedProducts = data.products;
+                        searchQueryText.textContent = "AI Vision Results: Matching products across stores";
+                        filterAndRenderUI();
+                    } else {
+                        alert("No matching products found!");
+                    }
+                } catch (err) { 
+                    loader.style.display = 'none';
+                    alert("Server error during upload!"); 
+                }
+            }
+
+            if (galleryInput) galleryInput.addEventListener('change', (e) => handleFileUpload(e.target.files[0]));
+            if (cameraInput) cameraInput.addEventListener('change', (e) => handleFileUpload(e.target.files[0]));
+
+            if (type === 'image') {
+                searchQueryText.textContent = "AI Vision Results: Matching products across stores";
+                const savedData = sessionStorage.getItem('imageSearchResult');
+                if (savedData) {
+                    rawFetchedProducts = JSON.parse(savedData).products || [];
+                    filterAndRenderUI();
+                    sessionStorage.removeItem('imageSearchResult');
+                }
+            } 
+            else if (query) {
+                searchQueryText.innerHTML = `Comparing prices for <strong style="color:#ff9900;">"${query}"</strong> across all stores`;
+                loader.style.display = 'block';
+                
+                try {
+                    const response = await fetch(`${BACKEND_URL}/search?query=${encodeURIComponent(query)}&category=${category || 'all'}`);
+                    const data = await response.json();
+                    loader.style.display = 'none';
+
+                    if (data.didYouMean) {
+                        didYouMeanArea.innerHTML = `Did you mean: <a id="didYouMeanLink">${data.didYouMean}</a>?`;
+                        document.getElementById('didYouMeanLink').addEventListener('click', () => {
+                            performNewSearch(data.didYouMean);
+                        });
+                    }
+
+                    if (data.success && data.products.length > 0) {
+                        rawFetchedProducts = data.products;
+                        filterAndRenderUI();
+                    } else {
+                        searchQueryText.textContent = `No matching products found.`;
+                    }
+                } catch (error) {
+                    loader.style.display = 'none';
+                    searchQueryText.textContent = "Server connection failed! Make sure backend is running.";
+                }
+            }
+        });
+
+        function checkLoginState() {
+            const savedUser = localStorage.getItem('shoppingAppUser');
+            const navAuthBtn = document.getElementById('navAuthBtn');
+            const userProfileArea = document.getElementById('userProfileArea');
+            const navProfilePic = document.getElementById('navProfilePic');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const dropdownUserName = document.getElementById('dropdownUserName');
+            const dropdownUserDetails = document.getElementById('dropdownUserDetails');
+            const historyList = document.getElementById('historyList');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (savedUser && navAuthBtn && userProfileArea) {
+                const user = JSON.parse(savedUser);
+                navAuthBtn.style.display = 'none';
+                userProfileArea.style.display = 'block';
+                navProfilePic.src = user.pic; 
+                
+                dropdownUserName.textContent = `Hi, ${user.name}`;
+                dropdownUserDetails.innerHTML = `Phone: ${user.phone || 'N/A'} <br> Age: ${user.age || 'N/A'}`;
+                
+                if(user.history && user.history.length > 0) {
+                    historyList.innerHTML = user.history.map(item => `<li style="margin-bottom: 4px;">${item}</li>`).join('');
+                }
+
+                navProfilePic.addEventListener('click', () => {
+                    profileDropdown.style.display = profileDropdown.style.display === 'none' || profileDropdown.style.display === '' ? 'block' : 'none';
+                });
+
+                logoutBtn.addEventListener('click', async () => {
+                    if(confirm("Logging out will permanently delete your data. Continue?")) {
+                        await fetch(`${BACKEND_URL}/logout`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: user.email })
+                        });
+                        localStorage.removeItem('shoppingAppUser');
+                        location.reload();
+                    }
+                });
+            }
+        }
+
+        function filterAndRenderUI() {
+            const sortOrder = document.getElementById('sortSelect').value;
+            let eligibleProducts = [...rawFetchedProducts];
+
+            // Sorting logic
+            if (sortOrder === 'lowToHigh') {
+                eligibleProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+            } else if (sortOrder === 'highToLow') {
+                eligibleProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            } else if (sortOrder === 'ratingHigh') {
+                eligibleProducts.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+            }
+
+            const bestSuggestionBox = document.getElementById('bestSuggestionBox');
+            const searchResultsGrid = document.getElementById('searchResultsGrid');
+
+            if (eligibleProducts.length === 0) {
+                bestSuggestionBox.style.display = 'none';
+                searchResultsGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: #f87171; padding: 30px;">
+                        <h3>No products found!</h3>
+                    </div>
+                `;
+                return;
+            }
+
+            // Calculate #1 Best Deal
+            let bestProduct = eligibleProducts[0];
+            eligibleProducts.forEach(item => {
+                if (parseFloat(item.price) < parseFloat(bestProduct.price)) {
+                    bestProduct = item;
+                }
+            });
+
+            bestSuggestionBox.style.display = 'block';
+            document.getElementById('bestTitle').textContent = bestProduct.title;
+            document.getElementById('bestDealImg').src = bestProduct.image;
+            document.getElementById('bestLink').href = bestProduct.link;
+            document.getElementById('bestInfo').innerHTML = `
+                On <span style="color: #ff9900; text-transform: uppercase;">${bestProduct.store}</span> for ₹${bestProduct.price} 
+                <br> <span style="color:#a0a0a0; font-size:0.82rem;">(Rating: ⭐ ${bestProduct.rating}/5.0)</span>
+            `;
+
+            searchResultsGrid.innerHTML = '';
+            eligibleProducts.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="platform-badge">${item.store}</div>
+                    <div class="product-img-wrapper">
+                        <img src="${item.image}" alt="${item.title}">
+                    </div>
+                    <div class="rating-price-row">
+                        <div class="rating-badge">⭐ ${item.rating}</div>
+                        <div class="product-price">₹${item.price}</div>
+                    </div>
+                    <div class="product-name">${item.title}</div>
+                    <a href="${item.link}" target="_blank" class="buy-now-btn">Explore</a>
+                `;
+                searchResultsGrid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

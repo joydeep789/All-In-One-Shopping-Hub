@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - All In One Shopping Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-image: url('image.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #080b11;
+            color: #ffffff; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            overflow-x: hidden; 
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(8, 11, 17, 0.90);
+            z-index: -1;
+        }
+
+        /* Top Navigation Bar */
+        .top-navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(18, 24, 36, 0.75);
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+
+        .back-home-btn {
+            background: rgba(255, 153, 0, 0.12);
+            border: 1px solid rgba(255, 153, 0, 0.4);
+            color: #ff9900;
+            text-decoration: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-home-btn:hover { background: #ff9900; color: #000; }
+
+        .nav-brand {
+            font-family: 'Dancing Script', cursive;
+            color: #ff9900;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-menu { display: flex; align-items: center; gap: 10px; }
+        .nav-link { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; font-weight: 500; padding: 6px 12px; border-radius: 12px; transition: 0.2s; }
+        .nav-link:hover, .nav-link.active { color: #ff9900; }
+
+        .user-profile-area { position: relative; }
+        .nav-profile-pic { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ff9900; cursor: pointer; object-fit: cover; }
+
+        .profile-dropdown {
+            display: none; position: absolute; right: 0; top: 48px; background: #111622; border: 1px solid rgba(255, 153, 0, 0.4);
+            border-radius: 14px; width: 240px; padding: 15px; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
+
+        .profile-dropdown h4 { color: #ff9900; font-size: 0.9rem; margin-bottom: 4px; }
+        .profile-dropdown p { color: #94a3b8; font-size: 0.75rem; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .history-list { color: #e2e8f0; font-size: 0.78rem; padding-left: 15px; margin-bottom: 12px; max-height: 100px; overflow-y: auto; }
+        .logout-btn { background: #ef4444; color: white; font-weight: 700; border: none; padding: 8px; width: 100%; border-radius: 6px; cursor: pointer; }
+
+        /* Help Container */
+        .help-container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        /* Hero Banner */
+        .hero-section {
+            text-align: center;
+            background: rgba(18, 24, 36, 0.65);
+            border: 1px solid rgba(255, 153, 0, 0.25);
+            padding: 45px 25px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        .hero-section h1 {
+            font-size: 2.6rem;
+            color: #ff9900;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .hero-section p {
+            color: #94a3b8;
+            font-size: 1rem;
+            max-width: 680px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+
+        /* Help Search Bar */
+        .help-search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(11, 15, 23, 0.8);
+            border: 1.5px solid rgba(255, 153, 0, 0.5);
+            border-radius: 30px;
+            padding: 6px 8px 6px 20px;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .help-search-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 0.92rem;
+            outline: none;
+        }
+
+        .help-search-bar button {
+            background: linear-gradient(45deg, #ff9900, #ff5e62);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .help-search-bar button:hover { transform: scale(1.03); }
+
+        /* Quick Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-card {
+            background: rgba(18, 24, 36, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
+            backdrop-filter: blur(8px);
+        }
+
+        .topic-card:hover {
+            border-color: rgba(255, 153, 0, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 153, 0, 0.15);
+        }
+
+        .topic-icon { font-size: 2.2rem; margin-bottom: 12px; display: inline-block; }
+        .topic-card h3 { color: #ff9900; font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+        .topic-card p { color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; }
+
+        /* FAQ Accordion Section */
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+        }
+
+        .section-title span { color: #ff9900; }
+
+        .faq-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .faq-item {
+            background: rgba(18, 24, 36, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .faq-question {
+            padding: 18px 22px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .faq-question:hover { color: #ff9900; }
+
+        .faq-icon {
+            color: #ff9900;
+            font-weight: 800;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 22px;
+            color: #94a3b8;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            border-top: 1px solid transparent;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active {
+            border-color: rgba(255, 153, 0, 0.4);
+            background: rgba(18, 24, 36, 0.85);
+        }
+
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 14px 22px 20px;
+            border-top-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Contact Support Form Section */
+        .contact-section {
+            background: rgba(18, 24, 36, 0.7);
+            border: 1.5px solid rgba(255, 153, 0, 0.35);
+            border-radius: 22px;
+            padding: 35px 30px;
+            backdrop-filter: blur(10px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .contact-section h3 {
+            color: #ff9900;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .contact-section p {
+            color: #94a3b8;
+            font-size: 0.88rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group-full { grid-column: 1 / -1; }
+
+        .form-control {
+            width: 100%;
+            background: rgba(11, 15, 23, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 0.88rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #ff9900;
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.2);
+        }
+
+        textarea.form-control { resize: vertical; min-height: 110px; }
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            background: linear-gradient(45deg, #ff9900, #ff5e62);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover { transform: scale(1.02); }
+
+        /* Multi-column Footer */
+        .footer-sec {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(12, 16, 24, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            padding: 35px 30px 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 10px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 28px;
+            margin-bottom: 25px;
+        }
+
+        .footer-col h4 {
+            color: #ff9900;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-col p {
+            color: #94a3b8;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 8px; }
+
+        .footer-col ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.84rem;
+            transition: 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #ff9900;
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom a { color: #ff9900; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .top-navbar { flex-direction: column; gap: 12px; text-align: center; }
+            .hero-section h1 { font-size: 2.1rem; }
+            .contact-form { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="top-navbar">
+        <div class="nav-left">
+            <a href="front_page.html" class="back-home-btn">← Home</a>
+            <a href="front_page.html" class="nav-brand">AIO Shopping Hub</a>
+        </div>
+        <div class="nav-menu">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="help.html" class="nav-link active">Help</a>
+            <a href="creator.html" class="nav-link">Creator</a>
+            <a href="front_page.html?openAuth=true" class="nav-link" id="navAuthBtn" style="background: #ff9900; color: #000; font-weight: 700; padding: 6px 14px; border-radius: 15px;">Login</a>
+
+            <div class="user-profile-area" id="userProfileArea" style="display: none;">
+                <img id="navProfilePic" class="nav-profile-pic" src="" alt="Profile">
+                <div id="profileDropdown" class="profile-dropdown">
+                    <h4 id="dropdownUserName">Hi, User</h4>
+                    <p id="dropdownUserDetails">Phone: - <br> Age: -</p>
+                    <h4 style="color: #ff9900; margin-bottom: 6px; font-size: 0.8rem;">Search History</h4>
+                    <ul id="historyList" class="history-list"><li>No history yet</li></ul>
+                    <button id="logoutBtn" class="logout-btn">Logout & Delete Data</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="help-container">
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1>How Can We Help You?</h1>
+            <p>Find answers to common questions, learn how to use visual price comparison, or reach out to our dedicated support team.</p>
+            
+            <div class="help-search-bar">
+                <input type="text" id="faqSearchInput" placeholder="Search help topics (e.g., image search, price match, stores)...">
+                <button id="faqSearchBtn">Search</button>
+            </div>
+        </section>
+
+        <!-- Quick Topics Grid -->
+        <section class="topics-grid">
+            <div class="topic-card">
+                <span class="topic-icon">🔍</span>
+                <h3>Price Search</h3>
+                <p>Learn how our multi-store algorithm compares live prices across major Indian shopping platforms.</p>
+            </div>
+            <div class="topic-card">
+                <span class="topic-icon">📷</span>
+                <h3>Camera & Visual Match</h3>
+                <p>How to upload photos or take picture snaps to find visual matches on clothing and beauty items.</p>
+            </div>
+            <div class="topic-card">
+                <span class="topic-icon">🏷️</span>
+                <h3>Category Strictness</h3>
+                <p>Understand why garments, makeup, and electronics are isolated to relevant store partners only.</p>
+            </div>
+            <div class="topic-card">
+                <span class="topic-icon">👤</span>
+                <h3>Account & OTP</h3>
+                <p>Help regarding email OTP verification, password recovery, and search history privacy.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section>
+            <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+            <div class="faq-wrapper" id="faqAccordion">
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does All In One Shopping Hub compare prices?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Our backend queries top e-commerce platforms (Amazon, Flipkart, Myntra, Nykaa, Croma, etc.) simultaneously, categorizes the search term, and ranks deals from lowest to highest so you can buy directly from the store offering the best price.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does the Camera / Image Search feature work?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        You can upload an existing photo from your gallery or take a live snap using your camera. Our AI vision system analyzes the image features (e.g. green shirt, lipstick shade) and displays visual product matches across all eligible store cards.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Why don't all platforms show up for every search?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        We enforce strict category filtering for accuracy! For instance, cosmetics stores like Nykaa or Purplle won't show up for laptop queries, and electronic stores like Croma won't show up for fashion searches.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do I complete my payment on All In One Shopping Hub?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        No. When you click "Explore" or "Buy From Best Store", we redirect you safely directly to the official platform's product page (e.g. Amazon or Flipkart) where you can complete your purchase securely.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my search history and profile data safe?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, completely! Your search history is stored securely to give you quick access to recent searches. You can clear your data at any time by clicking "Logout & Delete Data" from your profile dropdown menu.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-section">
+            <h3>Still Need Assistance?</h3>
+            <p>Fill out the form below and our support team will get back to you within 24 hours.</p>
+            
+            <form class="contact-form" id="contactSupportForm">
+                <div>
+                    <input type="text" class="form-control" placeholder="Your Full Name" required>
+                </div>
+                <div>
+                    <input type="email" class="form-control" placeholder="Your Email Address" required>
+                </div>
+                <div class="form-group-full">
+                    <input type="text" class="form-control" placeholder="Subject (e.g., Image Search Issue, Bug Report)" required>
+                </div>
+                <div class="form-group-full">
+                    <textarea class="form-control" placeholder="Describe your issue or query in detail..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Support Message</button>
+            </form>
+        </section>
+
+        <!-- Professional Footer -->
+        <footer class="footer-sec">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>AIO Shopping Hub</h4>
+                    <p>India's leading smart shopping aggregator engine. Compare fashion, cosmetics, and gadgets across top marketplaces effortlessly.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="front_page.html">Home</a></li>
+                        <li><a href="results.html?category=all">Explore Deals</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="creator.html">Creator Profile</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="results.html?category=garments">Garments & Apparel</a></li>
+                        <li><a href="results.html?category=makeup">Makeup & Beauty</a></li>
+                        <li><a href="results.html?category=electronic">Electronics & Tech</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact & Office</h4>
+                    <p>📍 Kolkata, West Bengal, India<br>
+                       ✉️ support@aioshoppinghub.com<br>
+                       ⏰ Mon - Sat: 9:00 AM - 8:00 PM</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 All In One Shopping Platform. All rights reserved.</p>
+                <p><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> • <a href="#">Disclaimer</a></p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const BACKEND_URL = 'http://localhost:5000/api';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginState();
+            setupFaqAccordion();
+            setupContactForm();
+        });
+
+        function checkLoginState() {
+            const savedUser = localStorage.getItem('shoppingAppUser');
+            const navAuthBtn = document.getElementById('navAuthBtn');
+            const userProfileArea = document.getElementById('userProfileArea');
+            const navProfilePic = document.getElementById('navProfilePic');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const dropdownUserName = document.getElementById('dropdownUserName');
+            const dropdownUserDetails = document.getElementById('dropdownUserDetails');
+            const historyList = document.getElementById('historyList');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (savedUser && navAuthBtn && userProfileArea) {
+                const user = JSON.parse(savedUser);
+                navAuthBtn.style.display = 'none';
+                userProfileArea.style.display = 'block';
+                navProfilePic.src = user.pic; 
+                
+                dropdownUserName.textContent = `Hi, ${user.name}`;
+                dropdownUserDetails.innerHTML = `Phone: ${user.phone || 'N/A'} <br> Age: ${user.age || 'N/A'}`;
+                
+                if(user.history && user.history.length > 0) {
+                    historyList.innerHTML = user.history.map(item => `<li style="margin-bottom: 4px;">${item}</li>`).join('');
+                }
+
+                navProfilePic.addEventListener('click', () => {
+                    profileDropdown.style.display = profileDropdown.style.display === 'none' || profileDropdown.style.display === '' ? 'block' : 'none';
+                });
+
+                logoutBtn.addEventListener('click', async () => {
+                    if(confirm("Logging out will permanently delete your data. Continue?")) {
+                        await fetch(`${BACKEND_URL}/logout`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: user.email })
+                        });
+                        localStorage.removeItem('shoppingAppUser');
+                        location.reload();
+                    }
+                });
+            }
+        }
+
+        function setupFaqAccordion() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    faqItems.forEach(el => el.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Quick filter for FAQs
+            const searchInput = document.getElementById('faqSearchInput');
+            const searchBtn = document.getElementById('faqSearchBtn');
+
+            function filterFaqs() {
+                const query = searchInput.value.toLowerCase().trim();
+                faqItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(query)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            if(searchBtn) searchBtn.addEventListener('click', filterFaqs);
+            if(searchInput) searchInput.addEventListener('keyup', filterFaqs);
+        }
+
+        function setupContactForm() {
+            const contactForm = document.getElementById('contactSupportForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert("Thank you! Your support message has been sent successfully. Our team will contact you shortly.");
+                    contactForm.reset();
+                });
+            }
+        }
+    </script>
+</body>
+</html>

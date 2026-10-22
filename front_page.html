@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All In One Shopping Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Top Right Navigation Bar -->
+    <nav class="top-nav">
+        <a href="front_page.html" class="nav-item active" id="navHome">Home</a>
+        <a href="about.html" class="nav-item" id="navabout">About Us</a>
+        <a href="help.html" class="nav-item" id="navHelp">Help</a>
+        <a href="creator.html" class="nav-item" id="navCreator">Creator</a>
+        
+        <!-- Auth Button -->
+        <a href="#" class="nav-item" id="navAuthBtn" style="background: #ff9900; color: #000;">Sign Up / Login</a>
+
+        <!-- Profile Area (Hidden by default) -->
+        <div id="userProfileArea" style="display: none;">
+            <img id="navProfilePic" src="" alt="Profile" style="width: 38px !important; height: 38px !important; min-width: 38px !important; min-height: 38px !important; border-radius: 50% !important; border: 2px solid #ff9900; cursor: pointer; object-fit: cover !important; flex-shrink: 0;">
+            
+            <!-- Profile Dropdown Card -->
+            <div id="profileDropdown" class="profile-card-dropdown">
+                <div class="profile-header-card">
+                    <img id="dropdownProfilePic" class="dropdown-dp" src="" alt="Profile Picture" style="width: 65px !important; height: 65px !important; min-width: 65px !important; min-height: 65px !important; border-radius: 50% !important; border: 2.5px solid #ff9900; object-fit: cover !important;">
+                    <h4 class="dropdown-user-name" id="dropdownUserName">Hi, User</h4>
+                    <p class="dropdown-user-details" id="dropdownUserDetails">Phone: - <br> Age: -</p>
+                </div>
+                
+                <h4 style="color: #ff9900; margin-bottom: 8px; font-size: 0.85rem; text-align: left;">My Search History</h4>
+                <ul id="historyList" style="color: white; font-size: 0.78rem; padding-left: 15px; margin-bottom: 15px; max-height: 100px; overflow-y: auto;">
+                    <li>No history yet</li>
+                </ul>
+                <button id="logoutBtn" style="background: #ef4444; color: white; font-weight: bold; border: none; padding: 9px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 0.82rem;">Logout & Delete Data</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="header">
+        <h1 class="main-title">All In One Shopping Hub</h1>
+        <p class="sub-title">PLEASE SIGN IN ALL THE WEBSITES TO GET BEST PRODUCT IN BEST PRICE</p>
+    </header>
+
+    <!-- MODERN EXECUTIVE AUTHENTICATION MODAL -->
+    <div id="authModalUI" class="modal">
+        <div class="auth-modal-card">
+            <button class="auth-close-x" id="closeAuthModalBtn" title="Close">&times;</button>
+            
+            <div class="auth-card-header">
+                <h3 class="auth-brand-title">AIO Shopping Hub</h3>
+                <p class="auth-subtitle">Sign in to unlock best multi-store deals</p>
+            </div>
+
+            <div class="auth-pill-tabs">
+                <button id="showLoginTab" class="auth-tab-btn active" style="background: #ff9900; color: #000;">Login</button>
+                <button id="showSignupTab" class="auth-tab-btn" style="background: transparent; color: #94a3b8;">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginFormArea">
+                <div class="auth-field-wrapper">
+                    <input type="email" id="loginEmail" class="auth-input-box" placeholder="Email Address">
+                    <input type="password" id="loginPassword" class="auth-input-box" placeholder="Password">
+                </div>
+                <button id="submitLoginAction" class="auth-submit-btn">Login Securely</button>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="signupFormArea" style="display: none;">
+                <div class="auth-field-wrapper">
+                    <input type="text" id="regName" class="auth-input-box" placeholder="Full Name">
+                    
+                    <div class="auth-input-row">
+                        <input type="email" id="regEmail" class="auth-input-box" placeholder="Email Address">
+                        <button id="sendOtpBtn" class="auth-inline-btn">Get OTP</button>
+                    </div>
+
+                    <!-- Hidden OTP input box (Shows after clicking Get OTP) -->
+                    <input type="text" id="regOtp" class="auth-input-box" placeholder="Enter 6-Digit OTP" style="display: none;">
+                    
+                    <input type="tel" id="regPhone" class="auth-input-box" placeholder="Phone Number">
+                    <input type="date" id="regDob" class="auth-input-box" title="Select Date of Birth">
+
+                    <label style="color:#94a3b8; font-size:0.75rem; text-align:left; display:block; padding-left:4px; margin-bottom:-6px;">Upload Profile Picture (Optional):</label>
+                    <input type="file" id="regPic" accept="image/*" class="auth-input-box" style="padding: 8px;">
+
+                    <input type="password" id="regPassword" class="auth-input-box" placeholder="Password (Min 6 characters)">
+                    <div id="passwordStrengthIndicator" style="font-size: 0.78rem; text-align: left; padding-left: 4px; margin-top: -6px; margin-bottom: 6px; font-weight: 600; display: none;"></div>
+                </div>
+                <button id="submitSignupAction" class="auth-submit-btn">Verify & Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <div class="left-content">
+            <div class="search-container">
+                <input type="text" placeholder="Type product name or link..." id="searchInput">
+                <button class="camera-btn" id="cameraModalTrigger" title="Search by Image">📷</button>
+                <button class="search-btn" id="searchBtn">Search</button>
+            </div>
+
+            <div id="optionModal" class="modal">
+                <div class="modal-content">
+                    <p style="margin-bottom: 15px; font-weight: bold; color: #fff;">Choose Image Source:</p>
+                    <label for="galleryInput" class="modal-btn">Gallery / File</label>
+                    <input type="file" id="galleryInput" accept="image/*" style="display: none;">
+                    
+                    <label for="cameraInput" class="modal-btn">Take Photo</label>
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+                    
+                    <button class="close-btn" id="closeModalBtn">Cancel</button>
+                </div>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">
+                    <span class="btn-head">ALL</span>
+                    <span class="btn-sub">(Show All)</span>
+                </button>
+                <button class="filter-btn" data-filter="garments">
+                    <span class="btn-head">G</span>
+                    <span class="btn-sub">(Garments)</span>
+                </button>
+                <button class="filter-btn" data-filter="makeup">
+                    <span class="btn-head">M</span>
+                    <span class="btn-sub">(Makeup)</span>
+                </button>
+                <button class="filter-btn" data-filter="electronic">
+                    <span class="btn-head">E</span>
+                    <span class="btn-sub">(Electronic)</span>
+                </button>
+            </div>
+
+            <div class="grid-wrapper">
+                <main class="store-grid">
+                    <div class="store-card garments electronic makeup" data-store="Amazon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="card-logo">
+                        <span class="store-name">AMAZON</span>
+                        <span class="store-tag">All Categories</span>
+                    </div>
+                    
+                    <div class="store-card garments electronic makeup" data-store="AJIO">
+                        <img src="images.png" alt="AJIO" class="card-logo">
+                        <span class="store-name">AJIO</span>
+                        <span class="store-tag">All Categories</span>
+                    </div>                    
+                    
+                    <div class="store-card garments electronic makeup" data-store="Myntra">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Myntra_Logo.png" alt="Myntra" class="card-logo">
+                        <span class="store-name">MYNTRA</span>
+                        <span class="store-tag">All Categories</span>
+                    </div>
+                    <div class="store-card garments electronic makeup" data-store="Flipkart">
+                        <img src="Flipkart_(1).png" alt="Flipkart" class="card-logo">
+                        <span class="store-name">FLIPKART</span>
+                        <span class="store-tag">All Categories</span>
+                    </div> 
+                    <div class="store-card electronic" data-store="Croma">
+                        <img src="images (4).jpeg" alt="Croma" class="card-logo">
+                        <span class="store-name">CROMA</span>
+                        <span class="store-tag">Electronics</span>
+                    </div>
+                    <div class="store-card makeup " data-store="Nykaa">
+                        <img src="unnamed.png" alt="Nykaa" class="card-logo">
+                        <span class="store-name">NYKAA</span>
+                        <span class="store-tag">Makeup & Beauty</span>
+                    </div>
+                    <div class="store-card electronic" data-store="Reliance Digital">
+                        <img src="unnamed (1).png" alt="Reliance Digital" class="card-logo">
+                        <span class="store-name">RELIANCE DIGITAL</span>
+                        <span class="store-tag">Electronics</span>
+                    </div>
+                    <div class="store-card makeup" data-store="Purplle">
+                        <img src="images (1).jpeg" alt="Purplle" class="card-logo">
+                        <span class="store-name">PURPLLE</span>
+                        <span class="store-tag">Makeup & Care</span>
+                    </div>
+                    <div class="store-card garments electronic makeup" data-store="Meesho">
+                        <img src="Meesho_logo.png" alt="Meesho" class="card-logo">
+                        <span class="store-name">MEESHO</span>
+                        <span class="store-tag">All Categories</span>
+                    </div>
+                    
+                    <div class="store-card garments" data-store="H & M">
+                        <img src="hm-logo-png_seeklogo-64496.png" alt="H & M" class="card-logo">
+                        <span class="store-name">H & M</span>
+                        <span class="store-tag">Garments</span>
+                    </div>                       
+                </main>
+                <div class="grid-scrollbar">
+                    <div class="scroll-thumb"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-3d-phone" id="phoneContainerWrapper">
+            <div class="phone-container" id="phoneDevice">
+                <div class="notch"></div>
+                <div class="screen">
+                    <div class="phone-app-header">AIO Shopping Hub</div>
+                    <div class="phone-scroll-grid">
+                        <div class="column-wrapper">
+                            <div class="track scroll-down">
+                                <div class="brand-card" data-store="AJIO"><img src="Ajio-Logo.png" alt="AJIO"><span>AJIO</span></div>
+                                <div class="brand-card" data-store="Flipkart"><img src="Flipkart_(1).png" alt="Flipkart"><span>Flipkart</span></div>                                
+                                <div class="brand-card" data-store="Purplle"><img src="images (1).jpeg" alt="Purplle"><span>Purplle</span></div>
+                                <div class="brand-card" data-store="Amazon"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"><span>Amazon</span></div>
+                                <div class="brand-card" data-store="Meesho"><img src="Meesho_logo.png" alt="Meesho"><span>Meesho</span></div>
+                                <div class="brand-card" data-store="AJIO"><img src="Ajio-Logo.png" alt="AJIO"><span>AJIO</span></div>
+                                <div class="brand-card" data-store="Purplle"><img src="images (1).jpeg" alt="Purplle"><span>Purplle</span></div>
+                                <div class="brand-card" data-store="Amazon"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"><span>Amazon</span></div>
+                                <div class="brand-card" data-store="Meesho"><img src="Meesho_logo.png" alt="Meesho"><span>Meesho</span></div>
+                                <div class="brand-card" data-store="Flipkart"><img src="Flipkart_(1).png" alt="Flipkart"><span>Flipkart</span></div>                                
+                            </div>
+                        </div>
+
+                        <div class="column-wrapper">
+                            <div class="track scroll-up">
+                                <div class="brand-card" data-store="Myntra"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Myntra_Logo.png" alt="Myntra"><span>Myntra</span></div>
+                                <div class="brand-card" data-store="Nykaa"><img src="unnamed.png" alt="Nykaa"><span>Nykaa</span></div>
+                                <div class="brand-card" data-store="Reliance"><img src="unnamed (1).png" alt="Reliance"><span>Reliance</span></div>
+                                <div class="brand-card" data-store="Meesho"><img src="Meesho_logo.png" alt="Meesho"><span>Meesho</span></div>                                
+                                <div class="brand-card" data-store="Flipkart"><img src="Flipkart_(1).png" alt="Flipkart"><span>Flipkart</span></div>
+                                <div class="brand-card" data-store="Amazon"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"><span>Amazon</span></div>
+                                <div class="brand-card" data-store="Myntra"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Myntra_Logo.png" alt="Myntra"><span>Myntra</span></div>
+                                <div class="brand-card" data-store="Nykaa"><img src="unnamed.png" alt="Nykaa"><span>Nykaa</span></div>
+                                <div class="brand-card" data-store="Reliance"><img src="unnamed (1).png" alt="Reliance"><span>Reliance</span></div>
+                                <div class="brand-card" data-store="Meesho"><img src="Meesho_logo.png" alt="Meesho"><span>Meesho</span></div>
+                                <div class="brand-card" data-store="Flipkart"><img src="Flipkart_(1).png" alt="Flipkart"><span>Flipkart</span></div>
+                                <div class="brand-card" data-store="Amazon"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"><span>Amazon</span></div>                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
